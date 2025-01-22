@@ -1,41 +1,67 @@
-import ProductCard from '../components/ProductCard';
+'use client';
 
-const Home: React.FC = () => {
+import React, { useEffect, useState } from "react";
+import { client } from "../../sanity/lib/client";
+import ProductCard from "../components/ProductCard";
+import localFont from "next/font/local";
+
+
+const font = localFont({
+  src: "../fonts/ClashDisplay-Extralight.otf",
+});
+
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  description: string;
+  imageUrl: string;
+}
+
+const HomePage: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const query = `*[_type == "product"] [3..6] {
+        _id,
+        name,
+        price,
+        description,
+        "imageUrl": image.asset->url
+      }`;
+
+      try {
+        const data = await client.fetch(query);
+        setProducts(data);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
-<section className="max-w-[1440px] mx-auto mt-6">
-    <h1 className='px-8 font-medium text-[#2A254B] text-3xl'>New Ceramics</h1>
-    <div className=" p-8 gap-x-10 md:gap-x-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
-      <ProductCard
-        imageSrc="/images/Right Image.png" 
-        altText="Product 1"
-        name="The Dandy chair"
-        price={250}
-      />
-      <ProductCard
-        imageSrc="/images/parent.png"
-        altText="Product 2"
-        name="Rustic Vase Set"
-        price={165}
-        className='space-x-5'
-      />
-      <ProductCard
-        imageSrc="/images/parent1.png"
-        altText="Product 3"
-        name="The Silky Vase"
-        price={155}
-      />
-       <ProductCard
-        imageSrc="/images/parent2.png"
-        altText="Product 3"
-        name="The Lucy Lamp"
-        price={399}
-      />
+    <section className=" px-8  gap-x-8" >
+    <h1 className={`${font.className} text-3xl font-bold text-[#2A254B]`}>New Ceramics</h1>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-6">
+      {/* gap-6 ensures proper spacing between all grid items */}
+      {products.map((product) => (
+        <ProductCard
+          key={product._id}
+          _id={product._id}
+          imageSrc={product.imageUrl}
+          altText={product.name}
+          name={product.name}
+          price={product.price}
+        />
+      ))}
     </div>
-    <div className='flex justify-center items-center'>
-    <button className='text-[#2A254B] bg-[#F9F9F9] px-5 py-3 font-Satoshi'>View Collection</button>
-    </div>
-</section> 
+  </section>
+  
   );
 };
 
-export default Home;
+export default HomePage;
+

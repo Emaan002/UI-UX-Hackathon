@@ -1,28 +1,36 @@
-import React from 'react';
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 interface ProductCardProps {
+  _id: string;
   imageSrc: string;
-  altText: string;  
-  name: string;    
+  altText: string;
+  name: string;
   price: number;
-  className?: string; 
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ imageSrc, altText, name, price,className='' }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ _id, imageSrc, altText, name, price }) => {
   return (
-    <div className={`"flex flex-col ${className}"`}>
-      <div className="w-[300px] h-[375px]  mb-4 relative">
+    <div className="group flex flex-col items-center">
+      <div className="w-[300px] h-[375px] mb-4 relative overflow-hidden">
         <Image
           src={imageSrc}
           alt={altText}
-          layout="fill" 
+          layout="fill"
           objectFit="cover"
-          className='p-1'
+          className="transition-transform duration-300 group-hover:scale-105"
         />
+        <Link
+          href={`/ProdutDetails/${_id}`}
+          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-[#2A254B] text-white px-8 py-2 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        >
+          View Details
+        </Link> 
+
       </div>
-      <h3 className="font-clash Display text-lg font-semibold text-gray-800 mb-2">{name}</h3>
-      <p className="font-clash Display font-normal text-xl">${price}</p>
+      <h3 className="text-lg font-semibold text-gray-800">{name}</h3>
+      <p className="text-xl font-normal">${price}</p>
     </div>
   );
 };

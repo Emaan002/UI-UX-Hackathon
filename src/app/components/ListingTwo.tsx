@@ -1,50 +1,65 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
+import ProductCard from "./ProductCard";
+import localFont from "next/font/local";
+import { client } from "../../sanity/lib/client";
+
+const font = localFont({
+  src: "../fonts/ClashDisplay-Extralight.otf",
+});
+
+
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  description: string;
+  imageUrl: string;
+}
+
+// Define the query to fetch the products
+const query = `
+  *[_type == "product" && _id in ["product-10", "product-9", "product-24","product-16"]] {
+    _id,
+    name,
+    description,
+    price,
+    "imageUrl": image.asset->url
+  }
+`;
 
 const Home: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    // Fetch data from Sanity
+    client.fetch(query).then((data) => setProducts(data));
+  }, []);
+
   return (
     <section className="max-w-[1440px] px-8 mt-6">
-      <h1 className="font-medium text-[#2A254B] text-3xl">
+      <h1 className={`${font.className} font-bold text-[#2A254B] text-3xl`}>
         Our Popular Products
       </h1>
-      <div className="mt-8 flex flex-col md:flex md:flex-row justify-between gap-x-5">
-        <div className="col-span-2 w-[630px]">
-          <Image
-            src={"/images/Large.png"}
-            alt="sofa image"
-            width={630}
-            height={500}
-            className="hidden md:flex w-full object-cover"
-          />
-          <p className="text-lg mt-3">The Poplar Suede Sofa</p>
-          <p className="text-gray-500">£980</p>
-        </div>
-
-        
-        <div className="col-span-1 w-[305px] ">
-          <Image
-            src={"/images/Right Image.png"}
-            alt="chair image"
-            width={305}
-            height={375}
-            className="w-full object-cover"
-          />
-          <p className="text-lg mt-3">The Dandy Chair</p>
-          <p className="text-gray-500">£250</p>
-        </div>
-
-        <div className="col-span-1 w-[305px]">
-          <Image
-            src={"/images/Photo.png"}
-            alt="chair image"
-            width={305}
-            height={375}
-            className="w-full object-cover"
-          />
-          <p className="text-lg mt-3">The Dandy Chair</p>
-          <p className="text-gray-500">£250</p>
-        </div>
+      <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
+        {products.map((product) => (
+          <div
+            key={product._id} // Use product._id for a unique key
+            className="w-[305px]"
+          >
+            <ProductCard
+              key={product._id}
+              _id={product._id}
+              imageSrc={product.imageUrl}
+              altText={product.name}
+              name={product.name}
+              price={product.price}
+            />
+          </div>
+        ))}
       </div>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center mt-6">
         <button className="text-[#2A254B] bg-[#F9F9F9] px-5 py-3 font-Satoshi">
           View Collection
         </button>
@@ -54,3 +69,6 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+
+
+

@@ -17,7 +17,9 @@ function Navbar() {
         <Search className="w-6 h-6 text-gray-600" />
         <Image src={"/images/Avion.jpg"} alt="logo" width={63} height={28} />
         <div className="flex items-center space-x-4">
+          <Link href="/ShoppingCart">
           <ShoppingCart className="w-6 h-6 text-gray-600" />
+          </Link>
           <Image
             src={"/images/User--avatar.svg"}
             alt="avatar"
@@ -43,6 +45,9 @@ function Navbar() {
           isMenuOpen ? "block" : "hidden"
         } md:hidden bg-white shadow-md rounded-lg p-4 space-y-4`}
       >
+         <Link href={"/"} className="text-gray-700 block">
+          Home
+        </Link>
         <Link href={"#"} className="text-gray-700 block">
           Plant pots
         </Link>
@@ -63,11 +68,17 @@ function Navbar() {
         </Link>
         <Link href={"#"} className="text-gray-700 block">
           Cutlery
+        </Link>
+        <Link href={"/product"} className="text-gray-700 block">
+          All product
         </Link>
       </div>
 
       {/* Links for Larger Screens */}
       <div className="hidden md:flex justify-center items-center space-x-10 mt-5">
+        <Link href={"/"} className="text-gray-700 block">
+          Home
+        </Link>
         <Link href={"#"} className="text-gray-700">
           Plant pots
         </Link>
@@ -88,6 +99,9 @@ function Navbar() {
         </Link>
         <Link href={"#"} className="text-gray-700">
           Cutlery
+        </Link>
+        <Link href="/Product" className="text-gray-700 block">
+          All products
         </Link>
       </div>
     </nav>
