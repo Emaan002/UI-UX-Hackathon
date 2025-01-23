@@ -82,9 +82,11 @@ const CheckoutForm: React.FC = () => {
       }
        
       const result = await response.json();
+      console.log(result);
       alert("Order submitted successfully!");
       router.push("/order-confirmation"); // Navigate to confirmation page
     } catch (err) {
+      console.error(err);
       alert("Something went wrong.");
     }
   };

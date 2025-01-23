@@ -59,6 +59,7 @@ const ProductDetails: React.FC = () => {
         const data = await client.fetch(query, { id });
         setProduct(data);
       } catch (err) {
+        console.error(err);
         setError("Failed to load product details.");
       }
     };
