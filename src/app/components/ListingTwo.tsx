@@ -42,10 +42,10 @@ const Home: React.FC = () => {
       <h1 className={`${font.className} font-bold text-[#2A254B] text-3xl`}>
         Our Popular Products
       </h1>
-      <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-7 mt-6">
         {products.map((product) => (
           <div
-            key={product._id} // Use product._id for a unique key
+            key={product._id} 
             className="w-[305px]"
           >
             <ProductCard

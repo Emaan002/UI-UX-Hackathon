@@ -17,7 +17,7 @@ const CheckoutForm: React.FC = () => {
   }
 
   const [formData, setFormData] = useState<{
-    customerName: string;
+    Name: string;
     email: string;
     address: string;
     city: string;
@@ -27,7 +27,7 @@ const CheckoutForm: React.FC = () => {
     orderItems: OrderItem[];
     totalAmount: number;
   }>({
-    customerName: "",
+    Name: "",
     email: "",
     address: "",
     city: "",
@@ -69,7 +69,7 @@ const CheckoutForm: React.FC = () => {
     e.preventDefault();
     console.log("Form data being submitted:", formData);
     try {
-      const response = await fetch("/api/checkout", {
+      const response = await fetch("http://localhost:3000/api/checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +84,7 @@ const CheckoutForm: React.FC = () => {
       const result = await response.json();
       console.log(result);
       alert("Order submitted successfully!");
-      router.push("/order-confirmation"); // Navigate to confirmation page
+      router.push("/order-confirmation");
     } catch (err) {
       console.error(err);
       alert("Something went wrong.");
@@ -103,10 +103,10 @@ const CheckoutForm: React.FC = () => {
             </label>
             <input
               type="text"
-              id="customerName"
-              name="customerName"
+              id="Name"
+              name="Name"
               placeholder="Your Name"
-              value={formData.customerName}
+              value={formData.Name}
               onChange={handleInputChange}
               required
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
