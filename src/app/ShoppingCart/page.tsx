@@ -2,15 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import localFont from "next/font/local";
 import Link from "next/link";
-
-const font = localFont({
-  src: "../fonts/ClashDisplay-Extralight.otf",
-});
+import { useUser, useClerk } from "@clerk/nextjs";
 
 interface CartItem {
-  title: string; // Using title as a unique identifier
+  title: string;
   description: string;
   price: number;
   image: string;
@@ -19,33 +15,26 @@ interface CartItem {
 
 const CartPage: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-
+  const { user } = useUser();
+  const { openSignUp } = useClerk();
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
     setCartItems(cart);
   }, []);
 
-  
   const handleRemove = (title: string) => {
     const updatedCart = cartItems.filter((item) => item.title !== title);
     setCartItems(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
-  // Calculate subtotal
-  const subtotal = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
+  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   return (
-    <div
-      className={`${font.className} max-w-4xl mx-auto p-4 sm:p-6 bg-white shadow-md rounded-md my-14`}
-    >
-      <h1 className="text-xl sm:text-2xl font-medium mb-4 sm:mb-6">
-        Your Shopping Cart
-      </h1>
+    <div className="max-w-4xl mx-auto p-4 sm:p-6 bg-white shadow-md rounded-md my-14">
+      <h1 className="text-xl sm:text-2xl font-medium mb-4 sm:mb-6">Your Shopping Cart</h1>
+
       {cartItems.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
@@ -62,26 +51,15 @@ const CartPage: React.FC = () => {
               {cartItems.map((item) => (
                 <tr key={item.title} className="border-b">
                   <td className="py-4 flex items-center">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      width={80}
-                      height={80}
-                      className="w-20 h-20 rounded"
-                    />
+                    <Image src={item.image} alt={item.title} width={80} height={80} className="w-20 h-20 rounded" />
                     <div className="ml-4">
-                      <p className="font-medium">{item.title}</p> 
+                      <p className="font-medium">{item.title}</p>
                     </div>
                   </td>
-                  <td className="py-4 ml-8">{item.quantity}</td>
-                  <td className="py-4 text-right">
-                    ${item.price * item.quantity}
-                  </td>
+                  <td className="py-4">{item.quantity}</td>
+                  <td className="py-4 text-right">${item.price * item.quantity}</td>
                   <td className="py-4 text-center">
-                    <button
-                      onClick={() => handleRemove(item.title)}
-                      className="text-red-500 hover:text-red-700 font-medium ml-4"
-                    >
+                    <button onClick={() => handleRemove(item.title)} className="text-red-500 hover:text-red-700 font-medium ml-4">
                       Remove
                     </button>
                   </td>
@@ -89,15 +67,24 @@ const CartPage: React.FC = () => {
               ))}
             </tbody>
           </table>
+
           <div className="text-right mt-6">
             <p className="text-gray-500">Subtotal</p>
-            <p className="text-xl font-medium">${subtotal.toFixed(2)}</p>
-            <Link
-              href="/checkout"
-              className="px-6 py-2 mt-4- bg-[#2A254B] text-white text-center rounded-md w-full sm:w-auto"
-            >
-              Go to checkout
-            </Link>
+            <p className="mb-2 text-xl font-medium">${subtotal.toFixed(2)}</p>
+
+            {/* If user is not signed in, show the sign-up button */}
+            {!user ? (
+              <button
+                onClick={() => openSignUp({})} // Opens sign-up modal
+                className="px-6 py-2 mt-4 bg-[#2A254B] text-white rounded-md"
+              >
+                Sign Up to Checkout
+              </button>
+            ) : (
+              <Link href="/checkout" className="mt-4 px-6 py-2 bg-[#2A254B] text-white rounded-md">
+                Go to Checkout
+              </Link>
+            )}
           </div>
         </>
       )}

@@ -17,7 +17,7 @@ const CheckoutForm: React.FC = () => {
   }
 
   const [formData, setFormData] = useState<{
-    Name: string;
+    customerName: string;
     email: string;
     address: string;
     city: string;
@@ -27,7 +27,7 @@ const CheckoutForm: React.FC = () => {
     orderItems: OrderItem[];
     totalAmount: number;
   }>({
-    Name: "",
+    customerName: "",
     email: "",
     address: "",
     city: "",
@@ -84,7 +84,7 @@ const CheckoutForm: React.FC = () => {
       const result = await response.json();
       console.log(result);
       alert("Order submitted successfully!");
-      router.push("/order-confirmation");
+      router.push("/orderConfirmation");
     } catch (err) {
       console.error(err);
       alert("Something went wrong.");
@@ -103,10 +103,10 @@ const CheckoutForm: React.FC = () => {
             </label>
             <input
               type="text"
-              id="Name"
-              name="Name"
+              id="customerName"
+              name="customerName"
               placeholder="Your Name"
-              value={formData.Name}
+              value={formData.customerName}
               onChange={handleInputChange}
               required
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"

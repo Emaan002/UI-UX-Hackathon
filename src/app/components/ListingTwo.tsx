@@ -38,11 +38,11 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <section className="max-w-[1440px] px-8 mt-6">
+    <section className="max-w-[1440px] mx-auto px-8 mt-6">
       <h1 className={`${font.className} font-bold text-[#2A254B] text-3xl`}>
         Our Popular Products
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-7 mt-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 mt-6">
         {products.map((product) => (
           <div
             key={product._id} 

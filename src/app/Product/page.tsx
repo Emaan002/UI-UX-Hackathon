@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import localFont from 'next/font/local';
 import ProductCard from '../components/ProductCard';
 import { client } from '../../sanity/lib/client';
 
@@ -13,10 +12,6 @@ interface Product {
   price: number;
   imageUrl: string;
 }
-
-const fontSec = localFont({
-  src: '../fonts/Satoshi-Light.otf',
-});
 
 // Sanity Query with Pagination
 const fetchProductsQuery = (start: number, limit: number) => `
@@ -76,24 +71,6 @@ const ProductPage = () => {
           objectFit="cover"
         />
       </div>
-
-      {/* Filter and Sorting Section
-      <div className="bg-white p-4 shadow-md">
-        <div className={`flex justify-between items-center ${fontSec.className}`}>
-          <div className="flex space-x-4">
-            <button className="text-gray-700 font-medium">Category</button>
-            <button className="text-gray-700 font-medium">Product type</button>
-            <button className="text-gray-700 font-medium">Price</button>
-            <button className="text-gray-700 font-medium">Brand</button>
-          </div>
-          <div className="flex space-x-2 items-center">
-            <span className="text-gray-700 font-medium">Sorting by:</span>
-            <button className="text-gray-700 font-medium">Date added</button>
-          </div>
-        </div>
-      </div> */}
-
-      {/* Product Grid */}
 
       <div className="p-8 gap-6 md:gap-6 mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
         {products.map((product) => (

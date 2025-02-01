@@ -43,23 +43,29 @@ const HomePage: React.FC = () => {
   }, []);
 
   return (
-    <section className=" px-8  gap-x-8" >
-    <h1 className={`${font.className} text-3xl font-bold text-[#2A254B]`}>New Ceramics</h1>
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-7 mt-6">
-      {/* gap-6 ensures proper spacing between all grid items */}
-      {products.map((product) => (
-        <ProductCard
-          key={product._id}
-          _id={product._id}
-          imageSrc={product.imageUrl}
-          altText={product.name}
-          name={product.name}
-          price={product.price}
-        />
-      ))}
-    </div>
-  </section>
-  
+  <section className="max-w-[1440px] mx-auto px-8 mt-6">
+  <h1 className={`${font.className} text-3xl font-bold text-[#2A254B]`}>
+    New Ceramics
+  </h1>
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-6 mt-6">
+        {products.map((product) => (
+          <div
+            key={product._id} 
+            className="w-[305px]"
+          >
+            <ProductCard
+              key={product._id}
+              _id={product._id}
+              imageSrc={product.imageUrl}
+              altText={product.name}
+              name={product.name}
+              price={product.price}
+            />
+          </div>
+        ))}
+      </div>
+</section>
+
   );
 };
 

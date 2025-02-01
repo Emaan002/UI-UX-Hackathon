@@ -6,8 +6,8 @@ import { LuSprout } from "react-icons/lu";
 
 function Featured() {
   return (
-    <section className="max-w-[1440px]">
-      <div className="flex flex-col items-center py-10">
+    <section className="max-w-[1440px] mx-auto ">
+      <div className="md:flex flex-col items-center py-10 ml-6">
         <h1 className="text-2xl font-medium mb-8 font-Clash Display">
           What makes our brand different
         </h1>

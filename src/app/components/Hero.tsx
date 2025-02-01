@@ -27,7 +27,7 @@ const Hero = () => {
             retail brand with nice fonts, tasteful colors and a beautiful way to
             display things digitally using modern web technologies.
           </p>
-          <button className={`${fontSec.className} w-full md:relative md:w-[188px] md:bottom-[25rem] py-[16px] px-[32px] bg-[#f9f9f9] bg-opacity-[15%] leading-6 text-white font-satoshi font-normal hover:bg-lightGray hover:text-[#2A254B] transition-all duration-300 ease-in-out`}>
+          <button className={`${fontSec.className} w-full md:relative md:w-[188px] md:bottom-[25rem] py-[16px] px-[32px] bg-[#f9f9f9] bg-opacity-[15%] leading-6 text-white font-satoshi font-normal transition-all duration-300 ease-in-out`}>
             View collection
           </button>
         </div>

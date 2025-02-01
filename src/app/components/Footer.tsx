@@ -23,7 +23,7 @@ const fontSec = localFont({
 
 function Footer() {
   return (
-    <footer className="bg-[#2A254B] text-white py-8">
+    <footer className="bg-[#2A254B] text-white py-8 mb-0">
       <div className="container mx-auto px-3">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           <div>

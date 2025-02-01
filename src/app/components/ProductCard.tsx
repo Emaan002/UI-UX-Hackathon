@@ -13,7 +13,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ _id, imageSrc, altText, name, price }) => {
   return (
     <div className="group flex flex-col items-center">
-      <div className="w-[300px] h-[375px] mb-4 relative overflow-hidden md:gap-6 ">
+      <div className="w-[300px] h-[375px] mb-4 relative overflow-hidden md:gap-7 ">
         <Image
           src={imageSrc}
           alt={altText}
