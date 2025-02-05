@@ -69,7 +69,7 @@ const CheckoutForm: React.FC = () => {
     e.preventDefault();
     console.log("Form data being submitted:", formData);
     try {
-      const response = await fetch("http://localhost:3000/api/checkout", {
+      const response = await fetch("https://ui-ux-hackathon-figma-iota.vercel.app/api/checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
